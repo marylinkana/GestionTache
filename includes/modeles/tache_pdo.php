@@ -28,14 +28,6 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
       array_push($where, "texte=?");
       array_push($parametres, $conditions["texte"]);
     }
-    if (isset($conditions['termine'])) {
-      array_push($where, "status='terminer'");
-      array_push($parametres, $conditions["status"]);
-    }
-    if (isset($conditions['enAttente'])) {
-      array_push($where, "status='enAttente'");
-      array_push($parametres, $conditions["status"]);
-    }
     if (count($where) > 0) {
       $requete .= "WHERE ".implode(" AND ", $where);
     }
@@ -50,7 +42,7 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
     $sqlval = array();
     $parametres = array();
     $sqlDefaut = array("dateDebut" => "NOW()", "ip" => "NOW()");
-    foreach(array("texte","dateDebut", "status" , "ip") as $champ) {
+    foreach(array("texte","dateDebut", "termine" , "ip") as $champ) {
       if (isset($valeurs[$champ])) {
         array_push($champs,$champ);
         array_push($sqlval, "?");
@@ -70,7 +62,7 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
   function mettreAJour($valeurs) {
     $champs = array();
     $parametres = array();
-    foreach(array("texte","dateDebut", "status" , "ip") as $champ) {
+    foreach(array("texte","dateDebut", "termine" , "ip") as $champ) {
       if (isset($valeurs[$champ])) {
         array_push($champs,"$champ=?");
         array_push($parametres, $valeurs[$champ]);
@@ -82,7 +74,7 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
   }
 
   function effacer($id) {
-    $stmt = $this->bdd->prepare("DELETE FROM taches WHERE id=:id;");
+    $stmt = $this->bdd->prepare("DELETE FROM taches WHERE id=:id OR termine=:id;");
     $stmt->execute(array("id" => $id));
   }
 

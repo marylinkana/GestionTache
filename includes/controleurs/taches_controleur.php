@@ -16,18 +16,29 @@ class TachesControleur {
           $tache->effacer();
         }
         header("Location: index.php?controlleur=taches&action=lister");
-        exit;
+        exit;  
       case 'modifier':
         $tache = $this->taches->trouver($parametres["id"]);
         if ($tache) {
           if (isset($parametres["termine"])) {
-            $tache->termine = $parametres["termine"] ? 1 : 0;
+            if($tache->termine == "termine"){
+              $tache->termine = "enAttente" ;
+            }
+            else{
+              $tache->termine = "termine" ;
+            }
+            $tache->enregistrer();
             $tache->enregistrer();
           } else {
             if (!empty(trim($parametres["texte"]))) {
               $tache->texte = $parametres["texte"];
               $tache->enregistrer();
-            } else {
+            } 
+            if (!empty(trim($parametres["dateDebut"]))) {
+              $tache->texte = $parametres["dateDebut"];
+              $tache->enregistrer();
+            } 
+            else{
               $taches->effacer();
             }
           }
@@ -49,10 +60,7 @@ class TachesControleur {
           $conditions['texte'] = $parametres["texte"];
         }
         if(isset($parametres["termine"])){
-          $conditions['status'] = 'termine';
-        }
-        if(isset($parametres["enAttente"])){
-          $conditions['status'] = 'enAttente';
+          $conditions['termine'] = $parametres["termine"];
         }
         $taches = $this->taches->selectionner($conditions);
         require "gabarits/taches/index.php";

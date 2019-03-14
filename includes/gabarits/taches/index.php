@@ -12,7 +12,7 @@
       <aside class="sidebar pure-u-1 pure-u-md-1-5">
           <header class="header">
               <h1 class="brand-title">TADA</h1>
-              <h2 class="brand-tagline">ToDo Sans Bavure</h2>
+              <h2 class="brand-tagline">Do Sans Bavure</h2>
           </header>
       </aside>
       <section class="content pure-u-1 pure-u-md-4-5">
@@ -41,42 +41,41 @@
             <th>Fait</th>
             <th style="display:flex;">
               <form action="?controleur=taches&action=mettreAJour" class=""  method="post">
-                <!--label>Recherche :</label-->
                 <input type="submit" value="Mettre à jour" class="">
               </form>
-              <form action="?controleur=taches&action=mettreAJour" class=""  method="post">
-                <!--label>Recherche :</label-->
-                <input type="submit" value="Supprimer" class="">
+              <form action="?controleur=taches&action=lister" class=""  method="post">
+                <input type="hidden" name="termine" value="termine">
+                <input type="submit" value="Tâches terminées" class="">
               </form>
               <form action="?controleur=taches&action=lister" class=""  method="post">
-                <!--label>Recherche :</label-->
-                <input type="hidden" size="60" name="termine" value="termine" id="tache-texte">
-                <input type="submit" value="Tâches terminés" class="">
-              </form>
-              <form action="?controleur=taches&action=lister" class=""  method="post">
-                <!--label>Recherche :</label-->
-                <input type="hidden" size="60" name="enAttente" value="enAttente" id="tache-texte">
+                <input type="hidden" name="termine" value="enAttente" >
                 <input type="submit" value="Tâches en attentes" class="">
+              </form>
+              <form action="?controleur=taches&action=effacer" class=""  method="post">
+                <input type="hidden" value="termine" name="id" />
+                <input type="submit" value="- Terminées" class="">
               </form>
             </th>
             <td></td>
           </thead>
           <tbody>
-            <?php foreach($taches as $t) { ?><tr>
-              <td>
+            <?php foreach($taches as $t) { ?>
+             <tr>
+              <td>    
                 <form action="?controleur=taches&action=modifier" class="pure-form"  method="post">
                   <input type="hidden" value="<?= $t->id ?>" name="id" />
-                  <input type="hidden" value="0" name="termine" />
-                  <input type="checkbox" value="1" <?php if ($t->termine) { echo "checked"; } ?>  name="termine" onchange="javascript:this.form.submit();"/>
+                  <input type="hidden" value="termine" name="termine" />
+                  <input type="checkbox" value="enAttente" <?php if ($t->termine == "termine") { echo"checked"; } ?>  name="termine" onchange="javascript:this.form.submit();"/>
                 </form>
+                
               </td>
               <td>
                 <form action="?controleur=taches&action=modifier" class="pure-form"  method="post">
                   <input type="hidden" value="<?= $t->id ?>" name="id" />
-                  <input type="text" value="<?= $t->ip ?>" size="13" name="texte" <?php if ($t->termine) { echo "disabled"; } ?>/>
-                  <input type="text" value="<?= $t->texte ?>" size="13" name="texte" <?php if ($t->termine) { echo "disabled"; } ?>/>
-                  <input type="text" value="<?= $t->dateDebut ?>" size="13" name="texte" <?php if ($t->termine) { echo "disabled"; } ?>/>
-                  <input type="text" value="<?= $t->status ?>" size="13" name="texte" <?php if ($t->termine) { echo "disabled"; } ?>/>
+                  <input type="text" value="<?= $t->ip ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
+                  <input type="text" value="<?= $t->texte ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
+                  <input type="text" value="<?= $t->dateDebut ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
+                  <input type="text" value="<?= $t->termine ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
                   <input type="submit" value="Modifier" />
                 </form>
               </td>
@@ -86,7 +85,8 @@
                   <input type="submit" value="✗" class="pure-button" />
                 </form>
               </td>
-            </tr><?php } ?>
+            </tr>
+          <?php } ?>
           </tbody>
         </table>
       </section>
