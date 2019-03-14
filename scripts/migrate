@@ -1,0 +1,4 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cat $(dirname $DIR)/migrations/* | mysql -u tasker --password=tasker -h 127.0.0.1 -P 3306 taches_db

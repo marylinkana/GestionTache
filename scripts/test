@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cat $(dirname $DIR)/migrations/* | mysql -u tasker --password=tasker -h 127.0.0.1 -P 3307 taches_db
+ls $(dirname $DIR)/tests/*_test.php | xargs -n 1 php -d zend.assertions=1

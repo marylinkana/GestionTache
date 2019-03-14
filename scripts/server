@@ -1,0 +1,4 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+php -d include_path=. -S 0.0.0.0:8000 -t public

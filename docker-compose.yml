@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=itic123
+      - MYSQL_DATABASE=taches_db
+      - MYSQL_USER=tasker
+      - MYSQL_PASSWORD=tasker
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+  test_db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=itic123
+      - MYSQL_DATABASE=taches_db
+      - MYSQL_USER=tasker
+      - MYSQL_PASSWORD=tasker
+    ports:
+      - "3307:3306"
+  # web:
+  #   image: php:7.2.2-apache
+  #   container_name: itic_web
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./includes:/var/www/includes
+  #     - ./public:/var/www/html
+  #   ports:
+  #     - "8000:80"
+  #   command: php -d include_path=.:/var/www/includes -S 0.0.0.0:80
+  dbadmin:
+    image: adminer
+    ports:
+      - "8080:8080"
+    links:
+      - "db:db"
+      - "test_db:test_db"
+volumes:
+  db_data:
