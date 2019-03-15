@@ -27,7 +27,8 @@
                 <form action="?controleur=taches&action=ajouter" class="pure-form"  method="post">
                   <!--label>Nouvelle :</label-->
                   <input type="submit" value="Ajouter" class="pure-button pure-button-primary">
-                  <input type="text" size="60" name="texte" id="tache-texte">
+                  <input type="text" size="40" name="texte" id="tache-texte">
+                  <input type="date" size="40" name="date" id="tache-texte">
                 </form>
 
                 <form action="?controleur=taches&action=lister" class="pure-form"  method="post">
@@ -72,9 +73,9 @@
               <td>
                 <form action="?controleur=taches&action=modifier" class="pure-form"  method="post">
                   <input type="hidden" value="<?= $t->id ?>" name="id" />
-                  <input type="text" value="<?= $t->ip ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
                   <input type="text" value="<?= $t->texte ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
-                  <input type="text" value="<?= $t->dateDebut ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
+                  <input type="datetime" value="<?= $t->dateDebut ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
+                  <input type="datetime" value="<?= $t->dateDeFin ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
                   <input type="text" value="<?= $t->termine ?>" size="13" name="texte" <?php if ($t->termine == "termine") { echo "disabled"; } ?>/>
                   <input type="submit" value="Modifier" />
                 </form>

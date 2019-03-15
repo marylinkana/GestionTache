@@ -41,8 +41,8 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
     $champs = array();
     $sqlval = array();
     $parametres = array();
-    $sqlDefaut = array("dateDebut" => "NOW()", "ip" => "NOW()");
-    foreach(array("texte","dateDebut", "termine" , "ip") as $champ) {
+    $sqlDefaut = array("dateDebut" => "NOW()");
+    foreach(array("texte","dateDebut" , "dateDeFin" , "termine") as $champ) {
       if (isset($valeurs[$champ])) {
         array_push($champs,$champ);
         array_push($sqlval, "?");
@@ -62,7 +62,7 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
   function mettreAJour($valeurs) {
     $champs = array();
     $parametres = array();
-    foreach(array("texte","dateDebut", "termine" , "ip") as $champ) {
+    foreach(array("texte","dateDebut" , "dateDeFin" , "termine") as $champ) {
       if (isset($valeurs[$champ])) {
         array_push($champs,"$champ=?");
         array_push($parametres, $valeurs[$champ]);

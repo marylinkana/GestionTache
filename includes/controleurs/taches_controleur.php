@@ -16,39 +16,42 @@ class TachesControleur {
           $tache->effacer();
         }
         header("Location: index.php?controlleur=taches&action=lister");
-        exit;  
+        exit;     
       case 'modifier':
         $tache = $this->taches->trouver($parametres["id"]);
         if ($tache) {
-          if (isset($parametres["termine"])) {
-            if($tache->termine == "termine"){
-              $tache->termine = "enAttente" ;
+            if (isset($parametres["termine"])) {
+                if($tache->termine == "termine"){
+                    $tache->termine = "enAttente" ;
+                }
+                else{
+                    $tache->termine = "termine" ;
+                }
+            $tache->enregistrer();
             }
             else{
-              $tache->termine = "termine" ;
+                if (!empty(trim($parametres["texte"]))) {
+                      $tache->texte = $parametres["texte"];
+                      $tache->enregistrer();
+                }
+                else{
+                    if (!empty(trim($parametres["dateDebut"]))) {
+                      $tache->texte = $parametres["dateDebut"];
+                      $tache->enregistrer();
+                    }
+                    else{
+                        $taches->effacer();
+                    }
+                }
             }
-            $tache->enregistrer();
-            $tache->enregistrer();
-          } else {
-            if (!empty(trim($parametres["texte"]))) {
-              $tache->texte = $parametres["texte"];
-              $tache->enregistrer();
-            } 
-            if (!empty(trim($parametres["dateDebut"]))) {
-              $tache->texte = $parametres["dateDebut"];
-              $tache->enregistrer();
-            } 
-            else{
-              $taches->effacer();
-            }
-          }
         }
         header("Location: index.php?controlleur=taches&action=lister");
         exit;
       case 'ajouter':
-        if (isset($parametres["texte"]) && !empty(trim($parametres["texte"]))) {
+        if (isset($parametres["texte"]) && !empty(trim($parametres["texte"])) && isset($parametres["date"]) &&  !empty(trim($parametres["date"]))) {
           $this->taches->creer(array(
-            "texte" => $parametres["texte"]
+            "texte" => $parametres["texte"],
+            "dateDeFin" => $parametres["date"]
           ));
         }
         header("Location: index.php?controlleur=taches&action=lister");
